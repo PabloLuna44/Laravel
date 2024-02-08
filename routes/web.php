@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Comentario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,20 +34,33 @@ Route::get('/contacto', function(){
 
 
 Route::post('/contacto',function(Request $request){
-dd($request->all(),$request->nombre,$request->input('email'));//Para obtener todo o cierto campo del post
+// dd($request->all(),$request->nombre,$request->input('email'));//Para obtener todo o cierto campo del post
 
 
 //Validar datos
 
 
-//Guardar Datps 
+//Guardar Datos 
+
+$comentario=new Comentario();
+
+$comentario->nombre=$request->nombre;
+$comentario->email=$request->email;
+$comentario->comentario=$request->comentario;
+$comentario->ciudad=$request->ciudad;
+
+$comentario->save();
+
 
 //redireccionar
 
 
-    return 'HOLA POST';
+    return redirect('/contacto');
+    // return redirect('/contacto');
 
 });
+
+
 
 
 
