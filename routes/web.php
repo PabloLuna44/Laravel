@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Comentario;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\SitioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,46 +20,13 @@ Route::get('/', function () {
 });
 
 
-Route::get('/information/{tipo?}', function($tipo=null) {
-    //get('/information/{tipo}' es oblogatorio poner la variable
-    //get('/information/{tipo?}' no es oblogatorio poner la variable
+Route::get('/information/{tipo?}',[SitioController::class,'info']);
+// Route::get('/contacto',[ComentarioController::class,'create']);
+// Route::post('/contacto',[ComentarioController::class,'store']);
+// Route::put('/contacto',[ComentarioController::class,'update']);
 
-    return view('information',compact('tipo'));//contact para mandar variable a la vista
-
-});
-
-Route::get('/contacto', function(){
-    return view('contacto');
-});
-
-
-Route::post('/contacto',function(Request $request){
-// dd($request->all(),$request->nombre,$request->input('email'));//Para obtener todo o cierto campo del post
-
-
-//Validar datos
-
-
-//Guardar Datos 
-
-$comentario=new Comentario();
-
-$comentario->nombre=$request->nombre;
-$comentario->email=$request->email;
-$comentario->comentario=$request->comentario;
-$comentario->ciudad=$request->ciudad;
-
-$comentario->save();
-
-
-//redireccionar
-
-
-    return redirect('/contacto');
-    // return redirect('/contacto');
-
-});
-
+//Solo incluyendo este hace todo el routing de un CRUD
+Route::resource('/comentario',ComentarioController::class);
 
 
 

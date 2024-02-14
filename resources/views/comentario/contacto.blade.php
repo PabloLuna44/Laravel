@@ -38,7 +38,7 @@
         <h2 class="text-center">Contacto</h2>
 
 
-        <form method="POST" class="form" action="/contacto">
+        <form method="POST" class="form" action="/comentario">
         @csrf
 
             <fieldset>
