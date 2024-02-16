@@ -33,14 +33,15 @@
     </header>
     <main>
         <h2 class="text-center">Contacto</h2>
-        <a href="{{route('comentario.index')}}">Listado</a>
 
 
-        <form method="POST" class="form" action="/comentario">
+        <form method="POST" class="form" action="{{route('comentario.update',$comentario)}}">
             @csrf
-
+            <!-- Establecer metodo de la peticiosn -->
+            @method('PATCH')
             <!-- Para incluir lo errores del formulario -->
             @include('parciales.formError')
+
 
             <fieldset>
                 <legend>Informacion del usuario</legend>
@@ -50,9 +51,8 @@
                 @enderror
                 <div class="field">
                     <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre">
+                    <input type="text" name="nombre" id="nombre" value="{{$comentario->nombre}}">
                 </div>
-
 
                 <p>Genero</p>
 
@@ -74,12 +74,12 @@
                     <label for="ciudad">Ciudad</label>
                     <select name="ciudad" id="ciudad">
 
-
                         <option selected value="">-----Selecciona tu estado-----</option>
-                        <option value="zapopan">Zapopan</option>
-                        <option value="guadalajara">Guadalajara</option>
-                        <option value="tlaquepaque">Tlaquepaque</option>
-                        <option value="Tonala">Tonala</option>
+                        <!-- Forma para establecer un valor selecciona dependiendo de lo que se recupera de la base de datos -->
+                        <option value="zapopan" @selected($comentario->ciudad == 'zapopan')>Zapopan</option>
+                        <option value="guadalajara" @selected($comentario->ciudad == 'guadalajara')>Guadalajara</option>
+                        <option value="tlaquepaque" @selected($comentario->ciudad == 'tlaquepaque')>Tlaquepaque</option>
+                        <option value="Tonala" @selected($comentario->ciudad == 'tonala')>Tonala</option>
                     </select>
 
                 </div>
@@ -90,22 +90,15 @@
 
                 <legend>Cuenta</legend>
 
-                <!-- Para mostrar errores de cada campo -->
-                @error('email')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
                 <div class="field">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email">
+                    <label for="emial">Email</label>
+                    <input type="email" name="email" id="email" value="{{$comentario->email}}">
                 </div>
-
-
 
                 <div class="field">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password">
                 </div>
-
 
             </fieldset>
 
@@ -114,7 +107,7 @@
 
                 <div class="field">
                     <label for="comentario">Comentario</label>
-                    <textarea name="comentario" id="" cols="30" rows="10"></textarea>
+                    <textarea name="comentario" id="" cols="30" rows="10">{{$comentario->comentario}}</textarea>
                 </div>
 
 
